@@ -8,18 +8,12 @@ export default async function handler(
     res: NextApiResponse,
 ) {
     try {
-        const { currentUser } = await serverAuth(req)
-        if (!currentUser) {
-            return res.status(401).json({ message: 'User not authenticated' })
-        }
-
         if (req.method === 'POST') {
+            const { currentUser } = await serverAuth(req, res)
             const { movieId } = req.body
 
             const existingMovie = await prismadb.movie.findUnique({
-                where: {
-                    id: movieId,
-                },
+                where: { id: movieId },
             })
 
             if (!existingMovie) {
@@ -35,6 +29,7 @@ export default async function handler(
         }
 
         if (req.method === 'DELETE') {
+            const { currentUser } = await serverAuth(req, res)
             const { movieId } = req.body
 
             const existingMovie = await prismadb.movie.findUnique({

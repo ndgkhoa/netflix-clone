@@ -18,36 +18,20 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
     }, [currentUser, movieId])
 
     const toggleFavorites = useCallback(async () => {
-        try {
-            let response
+        let response
 
-            if (isFavorite) {
-                response = await axios.delete('/api/favorite', {
-                    data: { movieId },
-                })
-            } else {
-                response = await axios.post('/api/favorite', { movieId })
-            }
-
-            console.log('API response:', response)
-
-            const updatedFavoriteIds = response.data.favoriteIds
-
-            mutate({ ...currentUser, favoriteIds: updatedFavoriteIds })
-            mutateFavorites()
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                console.error(
-                    'Axios error:',
-                    error.response?.data || error.message,
-                )
-                if (error.response?.status === 401) {
-                    alert('Bạn cần phải đăng nhập để thực hiện thao tác này')
-                }
-            } else {
-                console.error('Unknown error:', String(error))
-            }
+        if (isFavorite) {
+            response = await axios.delete('/api/favorite', {
+                data: { movieId },
+            })
+        } else {
+            response = await axios.post('/api/favorite', { movieId })
         }
+
+        const updatedFavoriteIds = response?.data?.favoriteIds
+
+        mutate({ ...currentUser, favoriteIds: updatedFavoriteIds })
+        mutateFavorites()
     }, [movieId, isFavorite, currentUser, mutate, mutateFavorites])
 
     const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus
