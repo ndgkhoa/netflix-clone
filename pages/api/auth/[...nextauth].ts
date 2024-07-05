@@ -25,7 +25,7 @@ export default NextAuth({
                     type: 'text',
                 },
                 password: {
-                    label: 'Passwprd',
+                    label: 'Password',
                     type: 'password',
                 },
             },

@@ -4,6 +4,7 @@ import MovieCard from './MovieCard'
 
 interface MovieListProps {
     data: {
+        id: string
         title: string
         description: string
         videoUrl: string
