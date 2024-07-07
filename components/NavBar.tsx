@@ -41,15 +41,15 @@ const NavBar = () => {
                 }`}
             >
                 <img className="h-4 lg:h-7" src="/images/logo.png" alt="logo" />
-                <div className="flex-row ml-8 gap-7 hidden lg:flex">
+                {/* <div className="flex-row ml-8 gap-7 hidden lg:flex">
                     <NavbarItem label="Home" />
                     <NavbarItem label="Series" />
                     <NavbarItem label="Films" />
                     <NavbarItem label="New & Popular" />
                     <NavbarItem label="My list" />
                     <NavbarItem label="Browse by languages" />
-                </div>
-                <div
+                </div> */}
+                {/* <div
                     onClick={toggleMobileMenu}
                     className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative"
                 >
@@ -60,14 +60,14 @@ const NavBar = () => {
                         }`}
                     />
                     <MobileMenu visible={showMobileMenu} />
-                </div>
+                </div> */}
                 <div className="flex flex-row ml-auto gap-7 items-center">
-                    <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
+                    {/* <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
                         <BsSearch />
                     </div>
                     <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
                         <BsBell />
-                    </div>
+                    </div> */}
                     <div
                         onClick={toggleAccountMenu}
                         className="flex flex-row items-center gap-2 cursor-pointer relative"
