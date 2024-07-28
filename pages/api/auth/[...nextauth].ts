@@ -6,6 +6,8 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prismadb from '@/lib/prismadb'
 import { compare } from 'bcrypt'
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export const authOptions: AuthOptions = {
     providers: [
         GithubProvider({
@@ -26,6 +28,10 @@ export const authOptions: AuthOptions = {
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) {
                     throw new Error('Email and password required')
+                }
+
+                if (!emailRegex.test(credentials.email)) {
+                    throw new Error('Invalid email format')
                 }
 
                 const user = await prismadb.user.findUnique({

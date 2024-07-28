@@ -36,37 +36,35 @@ const NavBar = () => {
     return (
         <nav className="w-full fixed z-40">
             <div
-                className={`px-4 md:px-16 py-6 flex flex-row items-center transition duration-500 ${
+                className={`px-4 md:px-16 py-6 flex items-center transition duration-500 ${
                     showBackground ? 'bg-zinc-900 bg-opacity-90' : ''
                 }`}
             >
-                <img className="h-4 lg:h-7" src="/images/logo.png" alt="logo" />
-                {/* <div className="flex-row ml-8 gap-7 hidden lg:flex">
-                    <NavbarItem label="Home" />
-                    <NavbarItem label="Series" />
-                    <NavbarItem label="Films" />
-                    <NavbarItem label="New & Popular" />
-                    <NavbarItem label="My list" />
-                    <NavbarItem label="Browse by languages" />
-                </div> */}
-                {/* <div
-                    onClick={toggleMobileMenu}
-                    className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative"
-                >
-                    <p className="text-white text-sm">Browse</p>
-                    <BsChevronDown
-                        className={`text-white transition ${
-                            showMobileMenu ? 'rotate-180' : 'rotate-0'
-                        }`}
+                {/* Cột 1: Logo */}
+                <div className="flex-1">
+                    <img
+                        className="h-4 lg:h-7"
+                        src="/images/logo.png"
+                        alt="logo"
                     />
-                    <MobileMenu visible={showMobileMenu} />
-                </div> */}
-                <div className="flex flex-row ml-auto gap-7 items-center">
-                    {/* <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
-                        <BsSearch />
+                </div>
+
+                {/* Cột 2: Tìm kiếm */}
+                {/* <div className="flex-none flex items-center space-x-2">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="pl-8 pr-4 py-2 border border-gray-400 rounded-md bg-transparent text-gray-200 focus:outline-none"
+                        />
+                        <BsSearch className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     </div>
-                    <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
-                        <BsBell />
+                </div> */}
+
+                {/* Cột 3: Tài khoản và Dashboard */}
+                <div className="flex-1 flex justify-end items-center gap-7">
+                    {/* <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
+                        Dashboard
                     </div> */}
                     <div
                         onClick={toggleAccountMenu}

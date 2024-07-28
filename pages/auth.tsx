@@ -5,8 +5,11 @@ import { useCallback, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 const Auth = () => {
+    const router = useRouter()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,26 +24,42 @@ const Auth = () => {
 
     const login = useCallback(async () => {
         try {
-            await signIn('credentials', {
+            const result = await signIn('credentials', {
                 email,
                 password,
-                callbackUrl: '/profiles',
+                callbackUrl: '/',
+                redirect: false,
             })
+
+            if (result?.ok) {
+                toast.success('Login successful!')
+                router.push('/')
+            } else {
+                toast.error(result?.error || 'Login failed!')
+            }
         } catch (error) {
-            console.log(error)
+            toast.error('An error occurred during login.')
         }
     }, [email, password])
 
     const register = useCallback(async () => {
         try {
-            await axios.post('/api/register', {
+            const response = await axios.post('/api/register', {
                 email,
                 name,
                 password,
             })
-            login()
+
+            if (response.status === 201) {
+                toast.success('Registration successful!')
+                login()
+            } else {
+                toast.error('Registration failed! ')
+            }
         } catch (error) {
-            console.log(error)
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message)
+            }
         }
     }, [email, name, password, login])
 
@@ -91,21 +110,35 @@ const Auth = () => {
                         </button>
                         <div className="flex flex-row items center gap-4 mt-8 justify-center">
                             <div
-                                onClick={() =>
-                                    signIn('google', {
-                                        callbackUrl: '/profiles',
+                                onClick={async () => {
+                                    const result = await signIn('google', {
+                                        callbackUrl: '/',
+                                        redirect: false,
                                     })
-                                }
+
+                                    if (result?.ok) {
+                                        toast.success('Logged in with Google!')
+                                    } else {
+                                        toast.error('Google login failed!')
+                                    }
+                                }}
                                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
                             >
                                 <FcGoogle size={30} />
                             </div>
                             <div
-                                onClick={() =>
-                                    signIn('github', {
-                                        callbackUrl: '/profiles',
+                                onClick={async () => {
+                                    const result = await signIn('github', {
+                                        callbackUrl: '/',
+                                        redirect: false,
                                     })
-                                }
+
+                                    if (result?.ok) {
+                                        toast.success('Logged in with GitHub!')
+                                    } else {
+                                        toast.error('GitHub login failed!')
+                                    }
+                                }}
                                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
                             >
                                 <FaGithub size={30} />
